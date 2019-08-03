@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BinaryOperator;
 
 public class ReturnThread implements Runnable {
@@ -11,13 +12,16 @@ public class ReturnThread implements Runnable {
         int x = random.nextInt(10);//模拟还书的个数。
         while(x<5)random.nextInt(10);
         while (x > 0) {
-            try{
+            try {
                 Thread.sleep(10);
-            } catch (InterruptedException e) { }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             if (Book.getBook().addBookNum()) {
                 System.out.println("剩余书量" + Book.getBook().getBookNUm());
             } else {
-                System.out.println("已满"+Book.getBook().getBookNUm());
+                System.out.println("已满");
+                break;
             }
             x--;
         }
