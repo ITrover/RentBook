@@ -3,23 +3,25 @@ package com.company;
 import javax.print.attribute.standard.RequestingUserName;
 import java.util.Random;
 
+/**
+ * 借书线程，消费者。
+ */
 public class BorrowThread implements Runnable {
-    //借书线程，消费者。
     @Override
     public void run() {
-        Random random=new Random();
-        int x=random.nextInt(10);//模拟还书的个数
-        while(x<5)random.nextInt(10);
-        while(x>0) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (Book.getBook().miusBookNum()) {
-                System.out.println("剩余书量" + Book.getBook().getBookNUm());
+        Random random = new Random();
+
+        //模拟借书的个数
+        int x = random.nextInt(10);
+        System.out.println("一共产生了" + x + "个借书");
+
+        while (x > 0) {
+            Book book = Book.getBook();
+            int bookNum = 0;
+            if ((bookNum = book.miusBookNum()) != -1) {
+                System.out.println("借书--剩余书量" + bookNum);
             } else {
-                System.out.println("已空");
+                System.out.println("借书--已空");
             }
             x--;
         }
